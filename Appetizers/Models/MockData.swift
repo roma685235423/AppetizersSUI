@@ -1,7 +1,7 @@
 import Foundation
 
 /// Модель с тестовыми данными закусок для предварительного просмотра и тестирования
-struct MockAppetizerData {
+struct MockData {
     
     /// Тестовый экземпляр закуски
     static let sampleAppetizer = AppetizerDTO(
