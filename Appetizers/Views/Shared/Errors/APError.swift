@@ -4,16 +4,27 @@ import SwiftUI
 /// Перечисление возможных ошибок при сетевых операциях.
 ///
 /// `APError` используется для представления ошибок, которые могут возникнуть при
-/// выполнении сетевых запросов, например при загрузке данных с сервера.
+/// выполнении сетевых запросов, а также при обработке формы профиля пользователя.
 ///
-/// Каждое значение перечисления представляет конкретный тип ошибки:
+/// Каждое значение перечисления представляет конкретный тип ошибки или состояния:
 /// - `invalidURL`: Некорректный URL-адрес.
 /// - `invalidResponse`: Некорректный HTTP-ответ от сервера.
 /// - `invalidData`: Невозможно декодировать полученные данные.
 /// - `unableToComplete`: Ошибка соединения или завершения запроса.
+/// - `invalidForm`: Некорректно заполненная форма (например, отсутствуют обязательные поля).
+/// - `invalidEmail`: Невалидный email.
+/// - `userSaveSuccess`: Успешное сохранение данных пользователя.
+/// - `invalidUserData`: Ошибка при сохранении данных пользователя.
 ///
-/// Также предоставляет метод для преобразования ошибки в `AlertItem`,
-/// чтобы отобразить её пользователю в виде алерта.
+/// Используется в связке с `AlertItem`, чтобы отображать понятные пользователю алерты.
+///
+/// - Метод:
+///   - `alertItem()`: Преобразует ошибку в `AlertItem` для отображения в UI.
+///
+/// - Пример использования:
+/// ```swift
+/// viewModel.alertItem = APError.invalidResponse.alertItem()
+/// ```
 enum APError: Error {
 
     /// URL-адрес недействителен.
@@ -27,6 +38,18 @@ enum APError: Error {
 
     /// Запрос не может быть завершён (например, проблемы с сетью).
     case unableToComplete
+
+    /// Некорректно заполненная форма.
+    case invalidForm
+
+    /// Неверно введён адрес электронной почты.
+    case invalidEmail
+
+    /// Успешное сохранение данных пользователя.
+    case userSaveSuccess
+
+    /// Ошибка при сохранении данных пользователя.
+    case invalidUserData
 
     /// Преобразует ошибку в `AlertItem` для отображения в UI.
     ///
@@ -52,6 +75,26 @@ enum APError: Error {
             AlertItem(
                 title: Text("Server Error"),
                 message: Text("Unable to complete your request at this time. Please check your internet connection.")
+            )
+        case .invalidForm:
+            AlertItem(
+                title: Text("Invalid Form"),
+                message: Text("Please ensure all fields in the form are complete and correct.")
+            )
+        case .invalidEmail:
+            AlertItem(
+                title: Text("Invalid Email"),
+                message: Text("Please ensure you have entered a valid email address.")
+            )
+        case .userSaveSuccess:
+            AlertItem(
+                title: Text("Profile Saved"),
+                message: Text("Your profile information has been saved successfully.")
+            )
+        case .invalidUserData:
+            AlertItem(
+                title: Text("Profile Error"),
+                message: Text("There was an issue saving your profile information. Please try again.")
             )
         }
     }
