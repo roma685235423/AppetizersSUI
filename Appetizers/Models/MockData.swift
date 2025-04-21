@@ -16,5 +16,23 @@ struct MockData {
     )
     
     /// Массив тестовых закусок (4 одинаковых экземпляра)
-    static let appetizers = Array(repeating: sampleAppetizer, count: 25)
+    static let appetizers = Array(repeating: sampleAppetizer, count: 0)
+    
+    static func orderItems() -> [AppetizerDTO] {
+        var orders: [AppetizerDTO] = []
+        for index in 1...Int.random(in: 3...5) {
+            let sampleAppetizer = AppetizerDTO(
+                id: 0000 + index,
+                name: "Test Appetizer \(index)",
+                description: "This is the description for my test appetizer #\(index)",
+                price: Double.random(in: 5...20),
+                imageURL: "",
+                calories: Int.random(in: 30...350),
+                protein: Int.random(in: 30...350),
+                carbs: Int.random(in: 30...350)
+                )
+            orders.append(sampleAppetizer)
+        }
+        return orders
+    }
 }
