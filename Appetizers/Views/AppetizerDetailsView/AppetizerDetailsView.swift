@@ -28,12 +28,11 @@ struct AppetizerDetailsView: View {
             
             Spacer()
             
-            Button {
+            Button( "$\(appetizer.price, specifier: "%.2f") - Add to order") {
                 order.add(appetizer)
                 isShowingDetailView = false
-            } label: {
-                APButton(title: "$\(appetizer.price, specifier: "%.2f") - Add to order")
             }
+            .standardButtonStyle()
             .padding(.bottom, 20)
         }
         .frame(width: 300, height: 525)

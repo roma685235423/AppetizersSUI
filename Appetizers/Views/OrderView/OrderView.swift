@@ -2,8 +2,6 @@ import SwiftUI
 
 struct OrderView: View {
     
-    @State private var orderItems = MockData.orderItems()
-    
     @EnvironmentObject var order: OrderViewModel
     
     var body: some View {

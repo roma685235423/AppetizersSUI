@@ -2,6 +2,8 @@ import SwiftUI
 
 struct AppetizerTabView: View {
     
+    @EnvironmentObject var order: OrderViewModel
+    
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house") {
@@ -15,6 +17,7 @@ struct AppetizerTabView: View {
             Tab("Orders", systemImage: "bag") {
                 OrderView()
             }
+            .badge(order.items.count)
         }
         .tint(.brandPrimary)
     }

@@ -12,6 +12,7 @@ struct AppetizerListView: View {
                 } else {
                     List(viewModel.appetizers) { appetizer in
                         AppetizerListCell(appetizer: appetizer)
+                            .listRowSeparatorTint(.brandPrimary)
                             .onTapGesture {
                                 viewModel.selectedAppetizer = appetizer
                                 viewModel.isShowingDetailView = true
