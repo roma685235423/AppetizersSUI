@@ -4,27 +4,27 @@ struct OrderView: View {
     
     @State private var orderItems = MockData.orderItems()
     
+    @EnvironmentObject var order: OrderViewModel
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack {
-                    if orderItems.isEmpty {
+                    if order.items.isEmpty {
                         EmptyState(type: .orders)
                     } else {
                         List {
-                            ForEach(orderItems) { appetizer in
+                            ForEach(order.items) { appetizer in
                                 AppetizerListCell(appetizer: appetizer)
                             }
-                            .onDelete { indexSet in
-                                orderItems.remove(atOffsets: indexSet)
-                            }
+                            .onDelete(perform: order.deleteItems)
                         }
                         .listStyle(.plain)
                         
                         Button {
                             print("Place Order")
                         } label: {
-                            APButton(title: "$99.99")
+                            APButton(title: "$\(order.totalPrice, specifier: "%.2f")")
                         }
                     }
                 }
