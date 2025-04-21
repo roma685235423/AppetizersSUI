@@ -7,16 +7,19 @@ struct AppetizerListView: View {
     var body: some View {
         ZStack {
             NavigationStack {
-                List(viewModel.appetizers) { appetizer in
-                    AppetizerListCell(appetizer: appetizer)
-                        .onTapGesture {
-                            viewModel.selectedAppetizer = appetizer
-                            viewModel.isShowingDetailView = true
-                            print("111")
-                        }
+                if viewModel.appetizers.isEmpty {
+                    EmptyState(type: .appetizer)
+                } else {
+                    List(viewModel.appetizers) { appetizer in
+                        AppetizerListCell(appetizer: appetizer)
+                            .onTapGesture {
+                                viewModel.selectedAppetizer = appetizer
+                                viewModel.isShowingDetailView = true
+                            }
+                    }
+                    .navigationTitle("🍟 Appetizers")
+                    .disabled(viewModel.isShowingDetailView)
                 }
-                .navigationTitle("🍟 Appetizers")
-                .disabled(viewModel.isShowingDetailView)
             }
             .onAppear {
                 viewModel.getAppetizers()
@@ -35,6 +38,7 @@ struct AppetizerListView: View {
             if viewModel.isShowingDetailView, let selectedAppetizer = viewModel.selectedAppetizer {
                 AppetizerDetailsView(appetizer: selectedAppetizer, isShowingDetailView: $viewModel.isShowingDetailView )
             }
+                
         }
     }
 }
